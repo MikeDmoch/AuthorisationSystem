@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AuthorisationSystem
 {
@@ -18,7 +14,7 @@ namespace AuthorisationSystem
         [RequiredPermission(1)]
         public void ViewData()
         {
-            if (Authorize(nameof(ViewData)))
+            if (Authorise(nameof(ViewData)))
             {
                 Console.WriteLine($"{_currentUser.Name} is viewing data.");
             }
@@ -27,7 +23,7 @@ namespace AuthorisationSystem
         [RequiredPermission(2)]
         public void ModifyData()
         {
-            if (Authorize(nameof(ModifyData)))
+            if (Authorise(nameof(ModifyData)))
             {
                 Console.WriteLine($"{_currentUser.Name} is modifying data.");
             }
@@ -36,13 +32,13 @@ namespace AuthorisationSystem
         [RequiredPermission(3)]
         public void DeleteData()
         {
-            if (Authorize(nameof(DeleteData)))
+            if (Authorise(nameof(DeleteData)))
             {
                 Console.WriteLine($"{_currentUser.Name} is deleting data.");
             }
         }
 
-        private bool Authorize(string methodName)
+        private bool Authorise(string methodName)
         {
             var method = GetType().GetMethod(methodName);
             var attribute = (RequiredPermissionAttribute)Attribute.GetCustomAttribute(method, typeof(RequiredPermissionAttribute));
